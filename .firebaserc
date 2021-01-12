@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "development": "ec-app-dev-40b69",
+    "production": "ec-app-12ba0"
+  }
+}

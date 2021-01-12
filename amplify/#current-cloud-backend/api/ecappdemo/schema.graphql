@@ -1,0 +1,39 @@
+type User @model {
+  id: ID!
+  name: String!
+  email: String
+  password: String
+  role: String
+  carts: [Cart] @connection(name: "UserCarts")
+}
+type Cart @model {
+  id: ID!
+  added_at: AWSDateTime
+  description: String
+  gender: String
+  images: String
+  name: String
+  price: Int!
+  productId: ID!
+  quantity: Int
+  size: String
+  user: User @connection(name: "UserCarts")
+}
+
+type Product @model {
+  id: ID!
+  name: String!
+  category: String!
+  description: String!
+  price: Int!
+  gender: String!
+  sizes: [Size] @connection(name: "ProductSizes")
+}
+
+type Size @model {
+  id: ID!
+  productId: ID!
+  size: String!
+  quantity: Int!
+  product: Product @connection(name: "ProductSizes")
+}
