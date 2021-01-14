@@ -77,6 +77,7 @@ const ProductEdit = () => {
           setCategory(data.category);
           setDescription(data.description);
           setPrice(data.price);
+          setSizes(data.sizes.items);
         });
         // dispatch(push("/"));
       } catch (e) {
@@ -137,6 +138,7 @@ const ProductEdit = () => {
         ></SelectBox>
 
         <SetSizeArea sizes={sizes} setSizes={setSizes} />
+        <div className="module-spacer--medium"></div>
         <div className="center">
           <PrimaryButton
             label={"商品情報を登録"}
