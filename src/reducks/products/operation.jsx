@@ -45,6 +45,7 @@ export const registerProduct = (
       gender: gender,
       // sizes: sizes,
     };
+
     console.log(sizes);
     if (!validateProductData(product)) {
       alert("必須項目を入力してください");
@@ -72,9 +73,18 @@ export const registerProduct = (
         try {
           console.log("商品情報の更新登録処理の開始 ");
           product.id = id;
-          API.graphql(graphqlOperation(updateProduct, { input: product }));
-          console.log("UpdateProduct: ", product);
-          // dispatch(push("/"));
+          API.graphql(graphqlOperation(updateProduct, { input: product })).then(
+            (result) => {
+              console.log("CreateProductInput: ", result);
+              sizes.map((size) => {
+                delete size.createdAt;
+                delete size.updatedAt;
+                size.productID = result.data.updateProduct.id;
+                API.graphql(graphqlOperation(updateSize, { input: size }));
+              });
+              dispatch(push("/"));
+            }
+          );
         } catch (e) {
           console.log(e);
           alert("登録が失敗しました。ネットワーク環境をご確認ください");
