@@ -8,7 +8,12 @@ import { push } from "connected-react-router";
 // import { dispatch } from "react";
 import { auth } from "../../firebase/index";
 import { API, graphqlOperation } from "aws-amplify";
-import { createUser, createCart, deleteCart } from "../../graphql/mutations";
+import {
+  createUser,
+  createCart,
+  deleteCart,
+  updateSize,
+} from "../../graphql/mutations";
 import { getUser, listCarts, getProduct } from "../../graphql/queries";
 import { useSelector } from "react-redux";
 import { getUserId } from "./selectors";
@@ -230,9 +235,9 @@ export const order = (productsInCart, amount) => {
             soldOutProducts.push(product.name);
             return size;
           } else {
+            size.quantity = size.quantity - 1;
             return {
               size: size,
-              quantity: size.quantity - 1,
             };
           }
         } else {
@@ -256,8 +261,10 @@ export const order = (productsInCart, amount) => {
       // cartの中身を削除
       try {
         targetCart.map((cart) => {
-          console.log(cart);
-          API.graphql(graphqlOperation(deleteCart, { input: { id: cart.id } }));
+          console.log(cart.cartId);
+          API.graphql(
+            graphqlOperation(deleteCart, { input: { id: cart.cartId } })
+          );
         });
         const deleteCartInUser = [];
         dispatch(deleteProductInCartAction(deleteCartInUser));
@@ -267,7 +274,10 @@ export const order = (productsInCart, amount) => {
 
       try {
         updatedSizes.map((size) => {
-          API.graphql(graphqlOperation(updatedSizes, { input: size }));
+          delete size.size.createdAt;
+          delete size.size.updatedAt;
+          API.graphql(graphqlOperation(updateSize, { input: size.size }));
+          console.log("Updatesize: ", size);
         });
       } catch (error) {
         console.log(error);
