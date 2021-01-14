@@ -82,6 +82,16 @@
           "env": "dev"
         }
       }
+    },
+    "hostingS3AndCloudFront": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-ecsite-dev-145753-deployment/amplify-cfn-templates/hosting/template.json",
+        "Parameters": {
+          "bucketName": "ecsite-20210114112322-hostingbucket",
+          "env": "dev"
+        }
+      }
     }
   },
   "Outputs": {
