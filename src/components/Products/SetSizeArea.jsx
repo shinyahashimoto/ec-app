@@ -61,7 +61,11 @@ const SetSizeArea = (props) => {
       } else {
         // 登録済みのサイズの編集
         const newSizes = props.sizes;
+        const id = newSizes[index].id;
         newSizes[index] = { size: size, quantity: parseInt(quantity) };
+        if (id) {
+          newSizes[index].id = id;
+        }
         props.setSizes(newSizes);
         setIndex(newSizes.length);
         setSize("");
