@@ -1,7 +1,0 @@
-{
-    "AppSyncApiName": "ecappdemo",
-    "DynamoDBBillingMode": "PAY_PER_REQUEST",
-    "DynamoDBEnableServerSideEncryption": false,
-    "S3DeploymentBucket": "amplify-ecappdemo-dev-133728-deployment",
-    "S3DeploymentRootKey": "amplify-appsync-files/851e218f3ded1fd3af65d41e166be690fb5821b0"
-}

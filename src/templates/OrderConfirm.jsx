@@ -40,7 +40,10 @@ const OrderConfirm = () => {
     return productsInCart.reduce((sum, product) => (sum += product.price), 0);
   }, [productsInCart]);
 
-  const shippingFee = subtotal >= 10000 ? 0 : 210;
+  let shippingFee = 0;
+  if (subtotal == 0) shippingFee = 0;
+  if (subtotal > 0 && subtotal < 10000) shippingFee = 210;
+  if (subtotal >= 10000) shippingFee = 0;
 
   const tax = (subtotal + shippingFee) * 0.1;
 
@@ -75,7 +78,7 @@ const OrderConfirm = () => {
           <TextDetail label={"合計(税込)"} value={"¥" + total}></TextDetail>
           <PrimaryButton
             label={"注文を確定する"}
-            onClick={() => dispatch(order())}
+            onClick={() => dispatch(order(productsInCart, total))}
           />
         </div>
       </div>

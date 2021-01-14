@@ -1,19 +1,19 @@
 {
   "providers": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-ecappdemo-dev-133728-authRole",
-      "UnauthRoleArn": "arn:aws:iam::342390449758:role/amplify-ecappdemo-dev-133728-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::342390449758:role/amplify-ecappdemo-dev-133728-authRole",
+      "AuthRoleName": "amplify-ecsite-dev-145753-authRole",
+      "UnauthRoleArn": "arn:aws:iam::342390449758:role/amplify-ecsite-dev-145753-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::342390449758:role/amplify-ecsite-dev-145753-authRole",
       "Region": "us-west-2",
-      "DeploymentBucketName": "amplify-ecappdemo-dev-133728-deployment",
-      "UnauthRoleName": "amplify-ecappdemo-dev-133728-unauthRole",
-      "StackName": "amplify-ecappdemo-dev-133728",
-      "StackId": "arn:aws:cloudformation:us-west-2:342390449758:stack/amplify-ecappdemo-dev-133728/bd1037e0-45a1-11eb-8994-022cd0b45a3b",
-      "AmplifyAppId": "d3ts36ljwr2vap"
+      "DeploymentBucketName": "amplify-ecsite-dev-145753-deployment",
+      "UnauthRoleName": "amplify-ecsite-dev-145753-unauthRole",
+      "StackName": "amplify-ecsite-dev-145753",
+      "StackId": "arn:aws:cloudformation:us-west-2:342390449758:stack/amplify-ecsite-dev-145753/1f26e980-549b-11eb-ba81-0abee4d15db7",
+      "AmplifyAppId": "d1zkci30qnququ"
     }
   },
   "api": {
-    "ecappdemo": {
+    "ecsite": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -22,58 +22,21 @@
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 7,
-              "description": "api-for-ec-site"
+              "description": ""
             }
           },
           "additionalAuthenticationProviders": []
         },
-        "GraphQLAPIIdOutput": "h5fu465l5reanm2djbvetfowmi",
-        "GraphQLAPIEndpointOutput": "https://6icb7oflxrefzh7qzibdbshyu4.appsync-api.us-west-2.amazonaws.com/graphql",
-        "GraphQLAPIKeyOutput": "da2-ogyg27sx5vcafmodv4c2zailhi"
+        "GraphQLAPIIdOutput": "45icl5lybvgwjlzytycfvhd5ca",
+        "GraphQLAPIEndpointOutput": "https://2faf2ywmz5huljxgcpjlar5foe.appsync-api.us-west-2.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-nskwdeqq3fftxktq7d5loufzdm"
       },
-      "lastPushTimeStamp": "2021-01-05T03:30:03.804Z",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-ecappdemo-dev-133728-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-        "logicalId": "apiecappdemo"
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-ecsite-dev-145753-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiecsite"
       },
-      "lastPushDirHash": "keenvJWrnSwc+D1awAgV/E7Dkc4="
-    }
-  },
-  "auth": {
-    "ecappdemo2a129898": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false,
-      "output": {
-        "AppClientSecret": "1sq07ideo34lpbfulijgg8nhsr7qf8dn7okvovqpnctcec7kottd",
-        "UserPoolId": "us-west-2_5niwzhd99",
-        "AppClientIDWeb": "49tbbt5gebg0h48v9rcah66rjj",
-        "AppClientID": "2l1150aas4b4nvsimtt85gjjtj",
-        "IdentityPoolId": "us-west-2:6deccdf4-d3c3-4837-903c-ad7a17dc2293",
-        "IdentityPoolName": "ecappdemo2a129898_identitypool_2a129898__dev",
-        "UserPoolName": "ecappdemo2a129898_userpool_2a129898"
-      },
-      "lastPushTimeStamp": "2021-01-05T03:30:02.535Z",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-ecappdemo-dev-133728-deployment/amplify-cfn-templates/auth/ecappdemo2a129898-cloudformation-template.yml",
-        "logicalId": "authecappdemo2a129898"
-      }
-    }
-  },
-  "storage": {
-    "cesitelabel": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "output": {
-        "BucketName": "ec-site-bucket133728-dev",
-        "Region": "us-west-2"
-      },
-      "lastPushTimeStamp": "2021-01-05T03:30:02.538Z",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-ecappdemo-dev-133728-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
-        "logicalId": "storagecesitelabel"
-      }
+      "lastPushTimeStamp": "2021-01-13T05:03:40.251Z",
+      "lastPushDirHash": "dfhEfcqWnreHkrQmM84ToXltBjU="
     }
   }
 }

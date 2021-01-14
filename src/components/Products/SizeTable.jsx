@@ -21,7 +21,8 @@ const useStyles = makeStyles({
 
 const SizeTable = (props) => {
   const classes = useStyles();
-  const sizes = props.sizes;
+  const sizes = props.sizes.items;
+
   return (
     <TableContainer>
       <Table>

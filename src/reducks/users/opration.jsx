@@ -9,9 +9,10 @@ import { push } from "connected-react-router";
 import { auth } from "../../firebase/index";
 import { API, graphqlOperation } from "aws-amplify";
 import { createUser, createCart, deleteCart } from "../../graphql/mutations";
-import { getUser, listCarts } from "../../graphql/queries";
+import { getUser, listCarts, getProduct } from "../../graphql/queries";
 import { useSelector } from "react-redux";
 import { getUserId } from "./selectors";
+import { AppsOutlined } from "@material-ui/icons";
 
 export const listenAuthState = () => {
   return async (dispatch) => {
@@ -160,6 +161,7 @@ export const addProductToCart = (addedProduct) => {
   return async (dispatch, getState) => {
     console.log(getState());
     const uid = getState().users.uid;
+    addedProduct.userID = uid;
     const cart = getState().users.cart;
     console.log("追加する商品情報");
     console.log(addedProduct);
@@ -208,8 +210,70 @@ export const deleteProductInCart = (itemId) => {
   };
 };
 
-export const order = (cart) => {
+export const order = (productsInCart, amount) => {
   return async (dispatch, getState) => {
     const uid = getState().users.uid;
+    const targetCart = getState().users.cart;
+
+    let products = {};
+    let soldOutProducts = [];
+    let updatedSizes = {};
+
+    for (const product of productsInCart) {
+      const targetProduct = await API.graphql(
+        graphqlOperation(getProduct, { id: product.productId })
+      );
+      const sizes = targetProduct.data.getProduct.sizes.items;
+      updatedSizes = sizes.map((size) => {
+        if (size.size === product.size) {
+          if (size.quantity === 0) {
+            soldOutProducts.push(product.name);
+            return size;
+          } else {
+            return {
+              size: size,
+              quantity: size.quantity - 1,
+            };
+          }
+        } else {
+          return size;
+        }
+      });
+    }
+
+    if (soldOutProducts.length > 0) {
+      const errorMessage =
+        soldOutProducts.length > 1
+          ? soldOutProducts.join("と")
+          : soldOutProducts[0];
+      alert(
+        "大変申し訳ありません。" +
+          errorMessage +
+          "が在庫切れとなったため注文処理を中断しました。"
+      );
+      return false;
+    } else {
+      // cartの中身を削除
+      try {
+        targetCart.map((cart) => {
+          console.log(cart);
+          API.graphql(graphqlOperation(deleteCart, { input: { id: cart.id } }));
+        });
+        const deleteCartInUser = [];
+        dispatch(deleteProductInCartAction(deleteCartInUser));
+      } catch (error) {
+        console.log(error);
+      }
+
+      try {
+        updatedSizes.map((size) => {
+          API.graphql(graphqlOperation(updatedSizes, { input: size }));
+        });
+      } catch (error) {
+        console.log(error);
+      }
+
+      dispatch(push("/orderComplete"));
+    }
   };
 };

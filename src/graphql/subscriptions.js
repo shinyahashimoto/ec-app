@@ -21,6 +21,7 @@ export const onCreateUser = /* GraphQL */ `
           productId
           quantity
           size
+          userID
           createdAt
           updatedAt
         }
@@ -51,6 +52,7 @@ export const onUpdateUser = /* GraphQL */ `
           productId
           quantity
           size
+          userID
           createdAt
           updatedAt
         }
@@ -81,6 +83,7 @@ export const onDeleteUser = /* GraphQL */ `
           productId
           quantity
           size
+          userID
           createdAt
           updatedAt
         }
@@ -104,6 +107,7 @@ export const onCreateCart = /* GraphQL */ `
       productId
       quantity
       size
+      userID
       user {
         id
         name
@@ -134,6 +138,7 @@ export const onUpdateCart = /* GraphQL */ `
       productId
       quantity
       size
+      userID
       user {
         id
         name
@@ -164,6 +169,7 @@ export const onDeleteCart = /* GraphQL */ `
       productId
       quantity
       size
+      userID
       user {
         id
         name
@@ -193,9 +199,9 @@ export const onCreateProduct = /* GraphQL */ `
       sizes {
         items {
           id
-          productId
           size
           quantity
+          productID
           createdAt
           updatedAt
         }
@@ -218,9 +224,9 @@ export const onUpdateProduct = /* GraphQL */ `
       sizes {
         items {
           id
-          productId
           size
           quantity
+          productID
           createdAt
           updatedAt
         }
@@ -243,9 +249,9 @@ export const onDeleteProduct = /* GraphQL */ `
       sizes {
         items {
           id
-          productId
           size
           quantity
+          productID
           createdAt
           updatedAt
         }
@@ -260,9 +266,9 @@ export const onCreateSize = /* GraphQL */ `
   subscription OnCreateSize {
     onCreateSize {
       id
-      productId
       size
       quantity
+      productID
       product {
         id
         name
@@ -285,9 +291,9 @@ export const onUpdateSize = /* GraphQL */ `
   subscription OnUpdateSize {
     onUpdateSize {
       id
-      productId
       size
       quantity
+      productID
       product {
         id
         name
@@ -310,9 +316,9 @@ export const onDeleteSize = /* GraphQL */ `
   subscription OnDeleteSize {
     onDeleteSize {
       id
-      productId
       size
       quantity
+      productID
       product {
         id
         name

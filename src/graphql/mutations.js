@@ -24,6 +24,7 @@ export const createUser = /* GraphQL */ `
           productId
           quantity
           size
+          userID
           createdAt
           updatedAt
         }
@@ -57,6 +58,7 @@ export const updateUser = /* GraphQL */ `
           productId
           quantity
           size
+          userID
           createdAt
           updatedAt
         }
@@ -90,6 +92,7 @@ export const deleteUser = /* GraphQL */ `
           productId
           quantity
           size
+          userID
           createdAt
           updatedAt
         }
@@ -116,6 +119,7 @@ export const createCart = /* GraphQL */ `
       productId
       quantity
       size
+      userID
       user {
         id
         name
@@ -149,6 +153,7 @@ export const updateCart = /* GraphQL */ `
       productId
       quantity
       size
+      userID
       user {
         id
         name
@@ -182,6 +187,7 @@ export const deleteCart = /* GraphQL */ `
       productId
       quantity
       size
+      userID
       user {
         id
         name
@@ -214,9 +220,9 @@ export const createProduct = /* GraphQL */ `
       sizes {
         items {
           id
-          productId
           size
           quantity
+          productID
           createdAt
           updatedAt
         }
@@ -242,9 +248,9 @@ export const updateProduct = /* GraphQL */ `
       sizes {
         items {
           id
-          productId
           size
           quantity
+          productID
           createdAt
           updatedAt
         }
@@ -270,9 +276,9 @@ export const deleteProduct = /* GraphQL */ `
       sizes {
         items {
           id
-          productId
           size
           quantity
+          productID
           createdAt
           updatedAt
         }
@@ -290,9 +296,9 @@ export const createSize = /* GraphQL */ `
   ) {
     createSize(input: $input, condition: $condition) {
       id
-      productId
       size
       quantity
+      productID
       product {
         id
         name
@@ -318,9 +324,9 @@ export const updateSize = /* GraphQL */ `
   ) {
     updateSize(input: $input, condition: $condition) {
       id
-      productId
       size
       quantity
+      productID
       product {
         id
         name
@@ -346,9 +352,9 @@ export const deleteSize = /* GraphQL */ `
   ) {
     deleteSize(input: $input, condition: $condition) {
       id
-      productId
       size
       quantity
+      productID
       product {
         id
         name
