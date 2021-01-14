@@ -1,20 +1,15 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-ecappdemo-dev-133728-authRole",
-      "UnauthRoleArn": "arn:aws:iam::342390449758:role/amplify-ecappdemo-dev-133728-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::342390449758:role/amplify-ecappdemo-dev-133728-authRole",
+      "AuthRoleName": "amplify-ecsite-dev-145753-authRole",
+      "UnauthRoleArn": "arn:aws:iam::342390449758:role/amplify-ecsite-dev-145753-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::342390449758:role/amplify-ecsite-dev-145753-authRole",
       "Region": "us-west-2",
-      "DeploymentBucketName": "amplify-ecappdemo-dev-133728-deployment",
-      "UnauthRoleName": "amplify-ecappdemo-dev-133728-unauthRole",
-      "StackName": "amplify-ecappdemo-dev-133728",
-      "StackId": "arn:aws:cloudformation:us-west-2:342390449758:stack/amplify-ecappdemo-dev-133728/bd1037e0-45a1-11eb-8994-022cd0b45a3b",
-      "AmplifyAppId": "d3ts36ljwr2vap"
-    },
-    "categories": {
-      "auth": {
-        "ecappdemo2a129898": {}
-      }
+      "DeploymentBucketName": "amplify-ecsite-dev-145753-deployment",
+      "UnauthRoleName": "amplify-ecsite-dev-145753-unauthRole",
+      "StackName": "amplify-ecsite-dev-145753",
+      "StackId": "arn:aws:cloudformation:us-west-2:342390449758:stack/amplify-ecsite-dev-145753/1f26e980-549b-11eb-ba81-0abee4d15db7",
+      "AmplifyAppId": "d1zkci30qnququ"
     }
   }
 }

@@ -21,6 +21,7 @@ export const getUser = /* GraphQL */ `
           productId
           quantity
           size
+          userID
           createdAt
           updatedAt
         }
@@ -67,6 +68,7 @@ export const getCart = /* GraphQL */ `
       productId
       quantity
       size
+      userID
       user {
         id
         name
@@ -102,6 +104,7 @@ export const listCarts = /* GraphQL */ `
         productId
         quantity
         size
+        userID
         user {
           id
           name
@@ -130,9 +133,9 @@ export const getProduct = /* GraphQL */ `
       sizes {
         items {
           id
-          productId
           size
           quantity
+          productID
           createdAt
           updatedAt
         }
@@ -171,9 +174,9 @@ export const getSize = /* GraphQL */ `
   query GetSize($id: ID!) {
     getSize(id: $id) {
       id
-      productId
       size
       quantity
+      productID
       product {
         id
         name
@@ -201,9 +204,9 @@ export const listSizes = /* GraphQL */ `
     listSizes(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        productId
         size
         quantity
+        productID
         product {
           id
           name

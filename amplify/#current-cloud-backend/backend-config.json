@@ -1,6 +1,6 @@
 {
   "api": {
-    "ecappdemo": {
+    "ecsite": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -9,26 +9,12 @@
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 7,
-              "description": "api-for-ec-site"
+              "description": ""
             }
           },
           "additionalAuthenticationProviders": []
         }
       }
-    }
-  },
-  "auth": {
-    "ecappdemo2a129898": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false
-    }
-  },
-  "storage": {
-    "cesitelabel": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation"
     }
   }
 }

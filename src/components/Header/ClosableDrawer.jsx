@@ -46,7 +46,6 @@ const ClosableDrawer = (props) => {
   const { container } = props;
   const dispatch = useDispatch();
 
-<<<<<<< HEAD
   const [keyword, setKeyword] = useState();
   const inputKeyword = useCallback(
     (event) => {
@@ -54,12 +53,6 @@ const ClosableDrawer = (props) => {
     },
     [setKeyword]
   );
-=======
-    const selectMenu = (event, path) => {
-        dispatch(push(path));
-        props.onClose(event, false);
-    };
->>>>>>> a9d2831... Modified a function to close drawer menu
 
   const selectMenu = (event, path) => {
     dispatch(push(path));
@@ -72,7 +65,7 @@ const ClosableDrawer = (props) => {
       label: "商品登録",
       icon: <AddCircleIcon />,
       id: "register",
-      value: "/product/edit",
+      value: "/product/edit/new",
     },
     {
       func: selectMenu,
@@ -145,73 +138,4 @@ const ClosableDrawer = (props) => {
   );
 };
 
-<<<<<<< HEAD
 export default ClosableDrawer;
-=======
-    const inputSearchKeyword = useCallback((event) => {
-        setSearchKeyword(event.target.value)
-    }, [setSearchKeyword])
-
-    return (
-        <nav className={classes.drawer} aria-label="mailbox folders">
-            <Drawer
-                container={container}
-                variant="temporary"
-                anchor={"right"}
-                open={props.open}
-                onClose={(e) => props.onClose(e, false)}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-                ModalProps={{
-                    keepMounted: true, // Better open performance on mobile.
-                }}
-            >
-                <div
-                    onClose={(e) => props.onClose(e, false)}
-                    onKeyDown={(e) => props.onClose(e, false)}
-                >
-                    <div className={classes.searchField}>
-                        <TextInput
-                            fullWidth={false} label={"キーワードを入力"} multiline={false}
-                            onChange={inputSearchKeyword} required={false} rows={1} value={searchKeyword} type={"text"}
-                        />
-                        <IconButton>
-                            <SearchIcon />
-                        </IconButton>
-                    </div>
-                    <Divider />
-                    <List>
-                        {menus.map(menu => (
-                            ((isAdministrator && menu.id === "register") || menu.id !== "register") && (
-                                <ListItem button key={menu.id} onClick={(e) => menu.func(e, menu.value)}>
-                                    <ListItemIcon>
-                                        {menu.icon}
-                                    </ListItemIcon>
-                                    <ListItemText primary={menu.label} />
-                                </ListItem>
-                            )
-                        ))}
-                        <ListItem button key="logout" onClick={() => dispatch(signOut())}>
-                            <ListItemIcon>
-                                <ExitToAppIcon/>
-                            </ListItemIcon>
-                            <ListItemText primary="ログアウト" />
-                        </ListItem>
-                    </List>
-                    <Divider />
-                    <List>
-                        {filters.map(filter => (
-                            <ListItem button key={filter.id} onClick={(e) => filter.func(e, filter.value)}>
-                                <ListItemText primary={filter.label} />
-                            </ListItem>
-                        ))}
-                    </List>
-                </div>
-            </Drawer>
-        </nav>
-    );
-}
-
-export default ClosableDrawer
->>>>>>> a9d2831... Modified a function to close drawer menu

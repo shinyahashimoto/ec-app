@@ -9,6 +9,7 @@ import {
 import { listProducts } from "../../graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
 import { fetchProductsAction, deleteProductAction } from "./action";
+import { push } from "connected-react-router";
 
 export const fetchProducts = () => {
   return async (dispatch) => {
@@ -42,23 +43,24 @@ export const registerProduct = (
       description: description,
       price: parseInt(price, 10),
       gender: gender,
-      sizes: sizes,
+      // sizes: sizes,
     };
-    console.log(product);
+    console.log(sizes);
     if (!validateProductData(product)) {
       alert("必須項目を入力してください");
     } else {
       if (id === "new") {
+        console.log("新規登録");
         //新規登録;
         try {
           API.graphql(graphqlOperation(createProduct, { input: product })).then(
             (result) => {
               console.log("CreateProductInput: ", result);
               sizes.map((size) => {
-                size.productId = result.data.createProduct.id;
+                size.productID = result.data.createProduct.id;
                 API.graphql(graphqlOperation(createSize, { input: size }));
               });
-              // dispatch(push)
+              dispatch(push("/"));
             }
           );
         } catch (e) {

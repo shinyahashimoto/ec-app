@@ -4,9 +4,10 @@ type User @model {
   email: String
   password: String
   role: String
-  carts: [Cart] @connection(name: "UserCarts")
+  carts: [Cart] @connection(keyName: "byUser", fields: ["id"])
 }
-type Cart @model {
+
+type Cart @model @key(name: "byUser", fields: ["userID"]) {
   id: ID!
   added_at: AWSDateTime
   description: String
@@ -17,7 +18,8 @@ type Cart @model {
   productId: ID!
   quantity: Int
   size: String
-  user: User @connection(name: "UserCarts")
+  userID: ID!
+  user: User @connection(fields: ["userID"])
 }
 
 type Product @model {
@@ -27,13 +29,13 @@ type Product @model {
   description: String!
   price: Int!
   gender: String!
-  sizes: [Size] @connection(name: "ProductSizes")
+  sizes: [Size] @connection(keyName: "byProduct", fields: ["id"])
 }
 
-type Size @model {
+type Size @model @key(name: "byProduct", fields: ["productID"]) {
   id: ID!
-  productId: ID!
   size: String!
   quantity: Int!
-  product: Product @connection(name: "ProductSizes")
+  productID: ID!
+  product: Product @connection(fields: ["productID"])
 }

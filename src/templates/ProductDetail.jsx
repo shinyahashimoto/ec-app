@@ -66,17 +66,19 @@ const ProductDetail = () => {
         // 取得した商品情報に紐づくサイズ情報を取得
         console.log("商品詳細ページで表示される商品情報");
         console.log(productData);
-        API.graphql(
-          graphqlOperation(listSizes, {
-            filter: { productId: { eq: id } },
-          })
-        ).then((result) => {
-          const sizeData = result.data.listSizes.items;
-          productData.sizes = sizeData;
-          setProduct(productData);
-          console.log("商品情報に紐づくサイズ情報");
-          console.log(sizeData);
-        });
+        // API.graphql(
+        //   graphqlOperation(listSizes, {
+        //     filter: { productId: { eq: id } },
+        //   })
+        // ).then((result) => {
+        //   if (0 !== result.data.listSizes.items.length) {
+        //     const sizeData = result.data.listSizes.items;
+        //     productData.sizes = sizeData;
+        //   }
+        //   console.log("商品情報に紐づくサイズ情報");
+        // });
+        setProduct(productData);
+        console.log(product);
       });
     } catch (e) {
       console.log(e);
@@ -98,7 +100,8 @@ const ProductDetail = () => {
       "-" +
       added0Date +
       "T" +
-      date.getHours() +
+      // date.getHours() +
+      10 +
       ":" +
       // date.getMinutes() +
       10 +

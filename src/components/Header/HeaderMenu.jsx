@@ -14,11 +14,16 @@ import { onCreateCart } from "../../graphql/subscriptions";
 import { fetchProductsIncart } from "../../reducks/users/opration";
 
 const HeaderMenu = (props) => {
-<<<<<<< HEAD
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const userId = getUserId(selector);
   let productsInCart = getProductsInCart(selector);
+  console.log(productsInCart);
+  let productCount =
+    typeof productsInCart === "undefined" ? 0 : productsInCart.length;
+
+  console.log("productsInCart");
+  console.log(productsInCart);
 
   useEffect(() => {
     API.graphql(graphqlOperation(onCreateCart)).subscribe({
@@ -33,7 +38,7 @@ const HeaderMenu = (props) => {
   return (
     <>
       <IconButton onClick={() => dispatch(push("/cart"))}>
-        <Badge badgeContent={productsInCart.length} color="secondary">
+        <Badge badgeContent={productCount} color="secondary">
           {/* <Badge> */}
           <ShoppingCartIcon />
         </Badge>
@@ -52,64 +57,5 @@ const HeaderMenu = (props) => {
       </IconButton>
     </>
   );
-=======
-    const dispatch = useDispatch();
-    const selector = useSelector((state) => state);
-    const userId = getUserId(selector);
-    let productsInCart = getProductsInCart(selector);
-
-    // Listen products in user's cart
-    useEffect(() => {
-        const unsubscribe = db.collection('users').doc(userId).collection('cart')
-            .onSnapshot(snapshots => {
-
-                snapshots.docChanges().forEach(change => {
-                    const product = change.doc.data();
-                    const changeType = change.type
-
-                    switch (changeType) {
-                        case 'added':
-                            productsInCart.push(product);
-                            break;
-                        case 'modified':
-                            const index = productsInCart.findIndex(product => product.cartId === change.doc.id)
-                            productsInCart[index] = product;
-                            break;
-                        case 'removed':
-                            productsInCart = productsInCart.filter(product => product.cartId !== change.doc.id);
-                            break;
-                        default:
-                            break;
-                    }
-                });
-
-                dispatch(fetchProductsInCart(productsInCart))
-            });
-
-        return () => unsubscribe()
-    },[]);
-
-    return (
-        <>
-            <IconButton onClick={() => dispatch(push('/cart'))}>
-                <Badge badgeContent={productsInCart.length} color="secondary">
-                    <ShoppingCartIcon />
-                </Badge>
-            </IconButton>
-            <IconButton>
-                <FavoriteBorderIcon />
-            </IconButton>
-            <IconButton
-                aria-label="Menu Items"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={(e) => props.handleDrawerToggle(e, true)}
-                color="inherit"
-            >
-                <MenuIcon />
-            </IconButton>
-        </>
-    );
->>>>>>> a9d2831... Modified a function to close drawer menu
 };
 export default HeaderMenu;

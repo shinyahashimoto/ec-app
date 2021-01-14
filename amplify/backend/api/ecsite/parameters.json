@@ -1,5 +1,5 @@
 {
-  "AppSyncApiName": "ecappdemo",
+  "AppSyncApiName": "ecsite",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false
 }
