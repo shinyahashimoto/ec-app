@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
@@ -12,6 +12,8 @@ import { getUserId } from "../../reducks/users/selectors";
 import { API, graphqlOperation } from "aws-amplify";
 import { deleteCart } from "../../graphql/mutations";
 import { deleteProductInCart } from "../../reducks/users/opration";
+import { Storage } from "aws-amplify";
+import NoImage from "../../assets/img/src/no_image.png";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -33,27 +35,18 @@ const CartItemList = (props) => {
   const selector = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  // const image = props.product.image[0].path;
   const id = props.product.id;
   const price = props.product.price.toLocaleString();
   const size = props.product.size;
 
-  // const removeItemFromCart = (itemId) => {
-  //   const uid = getUserId(selector);
-  //   try {
-  //     API.graphql(
-  //       graphqlOperation(deleteCart, { input: { id: itemId } })
-  //     ).then(() => {});
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const imagePath =
+    props.product.imagePath != null ? props.product.imagePath : NoImage;
 
   return (
     <>
       <ListItem className={classes.list}>
         <ListItemAvatar>
-          <img className={classes.image} alt="商品のTOP画像" />
+          <img className={classes.image} alt="商品のTOP画像" src={imagePath} />
         </ListItemAvatar>
         <div className={classes.text}>
           <ListItemText

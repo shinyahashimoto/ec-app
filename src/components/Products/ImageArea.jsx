@@ -15,36 +15,40 @@ const useStyles = makeStyles({
 const ImageArea = (props) => {
   const classes = useStyles();
 
-  const uploadImage = useCallback((event) => {
-    const file = event.target.files;
-    // let blob = new Blob(file, { type: "image/jpeg" });
+  const uploadImage = useCallback(
+    (event) => {
+      const file = event.target.files[0];
 
-    const S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const N = 16;
-    const fileName = Array.from(crypto.getRandomValues(new Uint32Array(N)))
-      .map((n) => S[n % S.length])
-      .join("");
+      const S =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      const N = 16;
+      const fileName = Array.from(crypto.getRandomValues(new Uint32Array(N)))
+        .map((n) => S[n % S.length])
+        .join("");
 
-    Storage.put(fileName, file, {
-      level: "private",
-      contentType: file.type,
-    })
-      .then((result) => console.log(result))
-      .catch((err) => console.log(err));
-  });
+      // var reader = new FileReader();
+      // reader.onload = (e) => {
+      //   props.setImage({ path: e.target.result });
+      // };
+
+      // reader.readAsDataURL(file);
+
+      // const newImage = { id: fileName, path: downloadURL };
+      props.setImage(file);
+      Storage.put(fileName, file)
+        .then((result) => {})
+        .catch((err) => console.log(err));
+    },
+    [props.setImage]
+  );
 
   return (
     <div>
-      {/* <div className="p-grid__list-images">
-        {props.images.length > 0 &&
-          props.images.map((image) => (
-            <ImagePreview
-              id={image.id}
-              path={image.path}
-              key={image.key}
-            ></ImagePreview>
-          ))}
-      </div> */}
+      <div className="p-grid__list-images">
+        {props.image != null && (
+          <ImagePreview path={props.image}></ImagePreview>
+        )}
+      </div>
       <div className="u-text-right">
         <span>商品画像を登録する</span>
         <IconButton className={classes.icon}>

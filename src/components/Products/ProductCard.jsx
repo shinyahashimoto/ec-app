@@ -65,9 +65,8 @@ const ProductCard = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  console.log(props);
   const price = props.price.toLocaleString();
-  const images = [{ path: NoImage }];
+  const imagePath = props.image != null ? props.image : NoImage;
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -82,7 +81,7 @@ const ProductCard = (props) => {
     <Card className={classes.root}>
       <CardMedia
         className={classes.media}
-        image={images[0].path}
+        image={imagePath}
         onClick={() => dispatch(push("/product/" + props.id))}
         title=""
       />
