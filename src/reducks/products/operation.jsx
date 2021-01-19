@@ -10,17 +10,21 @@ import { listProducts } from "../../graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
 import { fetchProductsAction, deleteProductAction } from "./action";
 import { push } from "connected-react-router";
+import { Storage } from "aws-amplify";
 
 export const fetchProducts = () => {
   return async (dispatch) => {
-    console.log("DBへ接続");
-    API.graphql(graphqlOperation(listProducts)).then((result) => {
-      const productList = [];
+    let productList = [];
+    API.graphql(graphqlOperation(listProducts)).then(async (result) => {
       const data = result.data.listProducts.items;
-      data.map((product) => {
-        console.log(product);
+      for (let product of data) {
+        if (product.image) {
+          await Storage.get(product.image).then((resultImage) => {
+            product.imagePath = resultImage;
+          });
+        }
         productList.push(product);
-      });
+      }
       dispatch(fetchProductsAction(productList));
     });
   };
@@ -33,7 +37,8 @@ export const registerProduct = (
   description,
   price,
   gender,
-  sizes
+  sizes,
+  image
 ) => {
   return async (dispatch) => {
     const product = {
@@ -43,6 +48,7 @@ export const registerProduct = (
       description: description,
       price: parseInt(price, 10),
       gender: gender,
+      image: image,
       // sizes: sizes,
     };
 
