@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "../components/Products/ProductCard";
 import { fetchProducts } from "../reducks/products/operation";
 import { getProducts } from "../reducks/products/selector";
+import { Storage } from "aws-amplify";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const ProductList = () => {
             <ProductCard
               key={product.id}
               id={product.id}
-              // images={product.images}
+              image={product.imagePath}
               price={product.price}
               name={product.name}
             />

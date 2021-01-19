@@ -8,6 +8,9 @@ import ImageSwiper from "../components/Products/ImageSwiper";
 import SizeTable from "../components/Products/SizeTable";
 import { propStyle } from "aws-amplify-react";
 import { addProductToCart } from "../reducks/users/opration";
+import CardMedia from "@material-ui/core/CardMedia";
+import { Storage } from "aws-amplify";
+import NoImage from "../assets/img/src/no_image.png";
 
 const useStyles = makeStyles((theme) => ({
   sliderBox: {
@@ -38,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
   price: {
     fontSize: 36,
   },
+  media: {
+    height: 0,
+    paddingTop: "100%",
+  },
 }));
 
 //???
@@ -61,25 +68,20 @@ const ProductDetail = () => {
   useEffect(() => {
     try {
       // 商品情報を取得
-      API.graphql(graphqlOperation(getProduct, { id: id })).then((result) => {
-        const productData = result.data.getProduct;
-        // 取得した商品情報に紐づくサイズ情報を取得
-        console.log("商品詳細ページで表示される商品情報");
-        console.log(productData);
-        // API.graphql(
-        //   graphqlOperation(listSizes, {
-        //     filter: { productId: { eq: id } },
-        //   })
-        // ).then((result) => {
-        //   if (0 !== result.data.listSizes.items.length) {
-        //     const sizeData = result.data.listSizes.items;
-        //     productData.sizes = sizeData;
-        //   }
-        //   console.log("商品情報に紐づくサイズ情報");
-        // });
-        setProduct(productData);
-        console.log(product);
-      });
+      API.graphql(graphqlOperation(getProduct, { id: id })).then(
+        async (result) => {
+          const productData = result.data.getProduct;
+          if (productData.image) {
+            await Storage.get(productData.image).then((resultImage) => {
+              productData.imagePath = resultImage;
+            });
+          } else {
+            productData.imagePath = NoImage;
+          }
+          // 取得した商品情報に紐づくサイズ情報を取得
+          setProduct(productData);
+        }
+      );
     } catch (e) {
       console.log(e);
     }
@@ -115,7 +117,7 @@ const ProductDetail = () => {
         added_at: formatDate,
         description: product.description,
         gender: product.gender,
-        images: product.Images,
+        image: product.image,
         name: product.name,
         price: product.price,
         productId: product.id,
@@ -131,6 +133,11 @@ const ProductDetail = () => {
         <div className="p-grid__row">
           <div className={classes.sliderBox}>
             {/* <ImageSwiper images={product.images} /> */}
+            <CardMedia
+              className={classes.media}
+              image={product.imagePath}
+              title=""
+            />
           </div>
           <div className={classes.detail}>
             <h2 className="u-text__headline">{product.name}</h2>

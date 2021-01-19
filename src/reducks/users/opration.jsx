@@ -18,6 +18,7 @@ import { getUser, listCarts, getProduct } from "../../graphql/queries";
 import { useSelector } from "react-redux";
 import { getUserId } from "./selectors";
 import { AppsOutlined } from "@material-ui/icons";
+import { Storage } from "aws-amplify";
 
 export const listenAuthState = () => {
   return async (dispatch) => {
@@ -27,20 +28,22 @@ export const listenAuthState = () => {
 
         try {
           API.graphql(graphqlOperation(getUser, { id: uid })).then(
-            (userResult) => {
-              API.graphql(graphqlOperation(listCarts, { userId: uid })).then(
-                (cartResult) => {
-                  console.log(cartResult.data.listCarts.items);
-                  dispatch(
-                    signInAction({
-                      isSingIn: true,
-                      role: userResult.data.getUser.role,
-                      username: userResult.data.getUser.name,
-                      uid: userResult.data.getUser.id,
-                      cart: cartResult.data.listCarts.items,
-                    })
-                  );
+            async (userResult) => {
+              for (let product of userResult.data.getUser.carts.items) {
+                if (product.image) {
+                  await Storage.get(product.image).then((resultImage) => {
+                    product.imagePath = resultImage;
+                  });
                 }
+              }
+              dispatch(
+                signInAction({
+                  isSingIn: true,
+                  role: userResult.data.getUser.role,
+                  username: userResult.data.getUser.name,
+                  uid: userResult.data.getUser.id,
+                  cart: userResult.data.getUser.carts.items,
+                })
               );
             }
           );
@@ -164,22 +167,17 @@ export const resetPassword = (email) => {
 
 export const addProductToCart = (addedProduct) => {
   return async (dispatch, getState) => {
-    console.log(getState());
     const uid = getState().users.uid;
     addedProduct.userID = uid;
     const cart = getState().users.cart;
-    console.log("追加する商品情報");
-    console.log(addedProduct);
 
     try {
       API.graphql(graphqlOperation(createCart, { input: addedProduct })).then(
         (result) => {
-          console.log(result);
           const data = result.data.createCart;
           const cartId = data.id;
           addedProduct.cartId = cartId;
           cart.push(addedProduct);
-
           dispatch(push("/"));
         }
       );
@@ -262,9 +260,7 @@ export const order = (productsInCart, amount) => {
       try {
         targetCart.map((cart) => {
           console.log(cart.cartId);
-          API.graphql(
-            graphqlOperation(deleteCart, { input: { id: cart.cartId } })
-          );
+          API.graphql(graphqlOperation(deleteCart, { input: { id: cart.id } }));
         });
         const deleteCartInUser = [];
         dispatch(deleteProductInCartAction(deleteCartInUser));
