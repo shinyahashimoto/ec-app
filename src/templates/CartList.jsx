@@ -37,13 +37,15 @@ const CartList = () => {
       <List className={classes.root}>
         {productsInCart.length > 0 &&
           productsInCart.map((product) => (
-            <CartItemList product={product} key={product.cartId} />
+            <CartItemList product={product} key={product.id} />
           ))}
       </List>
       <div className="module-spacer--medium" />
       <div className="p-grid__column">
-        {productsInCart.length > 0 && (
+        {productsInCart.length > 0 ? (
           <PrimaryButton label={"レジへ進む"} onClick={goToOrder} />
+        ) : (
+          <div>カートに商品が入っておりません。</div>
         )}
         <div className="module-spacer--extra-extra-small" />
         <PrimaryButton label={"ショッピングを続ける"} onClick={backToTop} />
